@@ -9,6 +9,10 @@
     "mocha": "*"
   },
   "dependencies": {
-    "redis": "*"
+    "redis": "*",
+    "async": "*"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
   }
 }
