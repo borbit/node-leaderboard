@@ -64,7 +64,7 @@ describe('Leaderboard', function() {
       });
     });
 
-    it('should return -1 if the user isn\'t in the leaderboard', function(done) {
+    it('should return -1 if member isn\'t in the leaderboard', function(done) {
       this.board.rank('piska', function(err, rank) {
         assert.equal(rank, -1);
         done();

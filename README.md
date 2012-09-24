@@ -1,7 +1,7 @@
 Leaderboard
 -----------
 
-Leaderboards backed by [Redis](http://redis.io) in Node.js
+Leaderboards backed by [Redis](http://redis.io) in Node.js. Inspired by [Agoragames' Leaderboard](https://github.com/agoragames/leaderboard).
 
 [![Build Status](https://secure.travis-ci.org/borbit/node-leaderboard.png)](http://travis-ci.org/borbit/node-leaderboard)
 
@@ -10,15 +10,10 @@ API
 
 #Constructor
 
-    new Leaderboard('name', [options])
+    new Leaderboard('name')
 
 Creates a new leaderboard or attaches to an existing leaderboard.
 
-**Options**
-
-  - `length`
-
-    Max leaderboard length. Default: `Infinity`
 
 ##Methods
 
@@ -33,7 +28,7 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
   - `rank(member, λ)`
 
-    Ranks a member in the leaderboard.
+    Retrieves the rank for a member in the leaderboard.
 
         board.rank('borbit', function(err, rank) {
           // rank - current position, -1 if a member didn't
