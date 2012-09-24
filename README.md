@@ -3,6 +3,8 @@ Leaderboard
 
 Leaderboards backed by [Redis](http://redis.io) in Node.js
 
+[![Build Status](https://secure.travis-ci.org/borbit/node-leaderboard.png)](http://travis-ci.org/borbit/node-leaderboard)
+
 API
 ---
 
