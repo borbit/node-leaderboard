@@ -1,19 +1,25 @@
-var redis = require('redis');
 var assert = require('assert');
-var Leaderboard = require('../');
+var redis = require('redis');
+var LB = require('../');
 
+// Constants
+var DBINDEX = 15;
+
+// Before all suites
 before(function(done) {
+  // Initialize a subject leaderboard before all suites
+  this.board = new LB('general', null, {db: DBINDEX});
+
+  // Creating connection to the redis and 
+  // changing the current selected database
   this.client = redis.createClient();
-  this.client.select(15, done);
+  this.client.select(DBINDEX, done);
 });
 
 describe('Leaderboard', function() {
-  
   describe('"add" method', function() {
-    // Initialize a subject leaderboard and 
-    // empty database before the suite
+    // Empty database before the suite
     before(function(done) {
-      this.board = new Leaderboard('test');
       this.client.flushdb(done);
     });
     
@@ -24,13 +30,32 @@ describe('Leaderboard', function() {
       });
     });
 
+    it('should return 1 for the member "member2" with score 20', function(done) {
+      this.board.add('member2', 20, function(err, rank) {
+        assert.equal(rank, 1);
+        done();
+      });
+    });
+
+    it('should return 2 for the member "member3" with score 10', function(done) {
+      this.board.add('member3', 10, function(err, rank) {
+        assert.equal(rank, 2);
+        done();
+      });
+    });
+
+    it('should return 0 for the member "member3" with score 40', function(done) {
+      this.board.add('member3', 40, function(err, rank) {
+        assert.equal(rank, 0);
+        done();
+      });
+    });
+
   });
 
   describe('"rank" method', function() {
-    // Initialize a subject leaderboard and 
-    // empty database before the suite
+    // Empty database before the suite
     before(function(done) {
-      this.board = new Leaderboard('test');
       this.client.flushdb(done);
     });
     
