@@ -10,7 +10,23 @@ API
 
 #Constructor
 
-    new Leaderboard('name')
+    new Leaderboard('name', [options], [redisOptions])
+
+###Options
+
+  - `pageSize` - default: `0`
+
+    Page size to be used when paging through the leaderboard
+
+###Redis Options
+
+  - `host` - default: `127.0.0.1`
+
+  - `port` - default: `6379`
+
+  - `db` - optional
+
+    Selected database index
 
 Creates a new leaderboard or attaches to an existing leaderboard.
 
@@ -22,8 +38,7 @@ Creates a new leaderboard or attaches to an existing leaderboard.
     Ranks a member in the leaderboard.
 
         board.add('borbit', 100500, function(err, rank) {
-          // rank - current position, -1 if a member didn't
-          // fall within the leaderboard
+          // rank - current position in the leadeboard
         });
 
   - `rank(member, λ)`
@@ -31,8 +46,22 @@ Creates a new leaderboard or attaches to an existing leaderboard.
     Retrieves the rank for a member in the leaderboard.
 
         board.rank('borbit', function(err, rank) {
-          // rank - current position, -1 if a member didn't
+          // rank - current position, -1 if a member doesn't
           // fall within the leaderboard
+        });
+
+  - `list([page], λ)`
+
+    Retrieves a page of leaders from the leaderboard.
+
+        board.list(function(err, list) {
+          // list - list of leaders are ordered from
+          // the highest to the lowest score
+          // [
+          //   {member: 'member1', score: 30},
+          //   {member: 'member2', score: 20},
+          //   {member: 'member3', score: 10}
+          // ]
         });
 
 ##Tests
