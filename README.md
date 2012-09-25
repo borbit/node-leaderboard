@@ -12,6 +12,8 @@ API
 
     new Leaderboard('name', [options], [redisOptions])
 
+Creates a new leaderboard or attaches to an existing leaderboard.
+
 ###Options
 
   - `pageSize` - default: `0`
@@ -25,10 +27,6 @@ API
   - `port` - default: `6379`
 
   - `db` - optional
-
-    Selected database index
-
-Creates a new leaderboard or attaches to an existing leaderboard.
 
 
 ##Methods
