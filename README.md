@@ -15,7 +15,7 @@ API
 
 #Constructor
 
-    new Leaderboard('name', [options], [redisOptions])
+    new Leaderboard('name', [options], [redisOptions|redisClient])
 
 Creates a new leaderboard or attaches to an existing leaderboard.
 

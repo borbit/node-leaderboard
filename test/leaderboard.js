@@ -19,6 +19,44 @@ before(function(done) {
 });
 
 describe('Leaderboard', function() {
+  describe('constructor', function() {
+    // Empty database before the suite
+    before(function(done) {
+      this.client.flushdb(done);
+    });
+
+    it('should have possibility to take RedisClient instance', function(done) {
+      var client = redis.createClient();
+      client.select(DBINDEX + 1);
+      client.flushdb(function() {
+
+        var board1 = new LB('__redis__', null, client);
+        var board2 = new LB('__redis__', null, client);
+        var board3 = new LB('__redis__', null, {db: DBINDEX});
+
+        async.parallel([
+          function(cb) { board1.add('member1', 10, cb); },
+          function(cb) { board2.add('member2', 20, cb); }
+        ], function() {
+          
+          board1.list(function(err, list) {
+            assert.deepEqual(list, [
+              {'member': 'member2', 'score': 20},
+              {'member': 'member1', 'score': 10}
+            ]);
+
+            board3.list(function(err, list) {
+              assert.deepEqual(list, []);
+              done();
+            });
+          });
+        });
+
+      });
+    });
+
+  });
+
   describe('"add" method', function() {
     // Empty database before the suite
     before(function(done) {
