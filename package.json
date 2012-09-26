@@ -1,10 +1,8 @@
 {
-  "name": "node-leaderboard",
+  "name": "leaderboard",
   "description": "Leaderboards backed by Redis in Node.js",
   "version": "0.0.1",
-  "contributors": [
-    "Serge Borbit <serge.borbit@gmail.com>"
-  ],
+  "author": "Serge Borbit <serge.borbit@gmail.com>",
   "devDependencies": {
     "mocha": "*"
   },

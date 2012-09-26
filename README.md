@@ -5,6 +5,11 @@ Leaderboards backed by [Redis](http://redis.io) in Node.js. Inspired by [Agoraga
 
 [![Build Status](https://secure.travis-ci.org/borbit/node-leaderboard.png)](http://travis-ci.org/borbit/node-leaderboard)
 
+Installation
+------------
+
+    $ npm install leaderboard
+
 API
 ---
 
@@ -67,7 +72,7 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
 Leaderboard is covered by [Mocha](http://visionmedia.github.com/mocha/). To run tests:
 
-     $ npm test
+    $ npm test
 
 ## License 
 
