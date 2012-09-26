@@ -20,14 +20,6 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
     Page size to be used when paging through the leaderboard
 
-###Redis Options
-
-  - `host` - default: `127.0.0.1`
-
-  - `port` - default: `6379`
-
-  - `db` - optional
-
 
 ##Methods
 
@@ -45,6 +37,15 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
         board.rank('borbit', function(err, rank) {
           // rank - current position, -1 if a member doesn't
+          // fall within the leaderboard
+        });
+
+  - `score(member, λ)`
+
+    Retrieves the score for a member in the leaderboard.
+
+        board.score('borbit', function(err, rank) {
+          // score - current score, -1 if a member doesn't
           // fall within the leaderboard
         });
 

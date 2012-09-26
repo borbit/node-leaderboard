@@ -169,4 +169,48 @@ describe('Leaderboard', function() {
     });
 
   });
+
+describe('"score" method', function() {
+    // Empty database before the suite
+    before(function(done) {
+      this.client.flushdb(done);
+    });
+    
+    it('should return currect score #1', function(done) {
+      var board = this.board;
+      board.add('member1', 50, function() {
+        board.score('member1', function(err, score) {
+          assert.deepEqual(score, 50);
+          done();
+        });
+      });
+    });
+
+    it('should return currect score #2', function(done) {
+      var board = this.board;
+      board.add('member2', 100, function() {
+        board.score('member2', function(err, score) {
+          assert.deepEqual(score, 100);
+          done();
+        });
+      });
+    });
+
+    it('should return currect score #3', function(done) {
+      var board = this.board;
+      board.add('member1', 150, function() {
+        board.score('member1', function(err, score) {
+          assert.deepEqual(score, 150);
+          done();
+        });
+      });
+    });
+
+    it('should return -1 if member isn\'t in the leaderboard', function(done) {
+      this.board.score('sosiska', function(err, score) {
+        assert.deepEqual(score, -1);
+        done();
+      });
+    });
+  });
 });
