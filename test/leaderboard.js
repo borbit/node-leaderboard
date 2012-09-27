@@ -181,7 +181,7 @@ describe('Leaderboard', function() {
       });
     });
 
-    it('should return currect list size for the page 0', function(done) {
+    it('should return currect number of entries for the page 0', function(done) {
       var board = new LB('general', {pageSize: 5}, {db: DBINDEX});
 
       async.parallel([
@@ -197,7 +197,7 @@ describe('Leaderboard', function() {
       });
     });
 
-    it('should return currect list size for the page 1', function(done) {
+    it('should return currect number of entries for the page 1', function(done) {
       var board = new LB('general', {pageSize: 5}, {db: DBINDEX});
       
       board.list(1, function(err, list) {
@@ -208,7 +208,7 @@ describe('Leaderboard', function() {
 
   });
 
-describe('"score" method', function() {
+  describe('"score" method', function() {
     // Empty database before the suite
     before(function(done) {
       this.client.flushdb(done);
@@ -304,6 +304,34 @@ describe('"score" method', function() {
         board.rm('member100500', function(err, removed) {
           assert.strictEqual(removed, false);
           done();
+        });
+      });
+    });
+
+  });
+
+  describe('Options', function() {
+    // Empty database before the suite
+    before(function(done) {
+      this.client.flushdb(done);
+    });
+
+    describe('"pageSize"', function() {
+      it('should enforce currect number of entries for a page', function(done) {
+        var board = new LB('general', {pageSize: 5}, {db: DBINDEX});
+
+        async.parallel([
+          function(cb) { board.add('member1', 10, cb); },
+          function(cb) { board.add('member2', 20, cb); },
+          function(cb) { board.add('member3', 30, cb); },
+          function(cb) { board.add('member4', 40, cb); },
+          function(cb) { board.add('member5', 50, cb); },
+          function(cb) { board.add('member6', 60, cb); }
+        ], function() {
+          board.list(function(err, list) {
+            assert.equal(list.length, 5);
+            done();
+          });
         });
       });
     });
