@@ -68,6 +68,16 @@ Creates a new leaderboard or attaches to an existing leaderboard.
           // ]
         });
 
+  - `rm(member, λ)`
+
+    Removes a member from the leaderboard.
+
+        board.rm('kot', function(err, removed) {
+          // removed - false in case the removing memeber 
+          // doesn't exist in the leaderboard.
+          // true - successful remove
+        });
+
 ##Tests
 
 Leaderboard is covered by [Mocha](http://visionmedia.github.com/mocha/). To run tests:

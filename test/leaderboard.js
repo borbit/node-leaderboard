@@ -251,4 +251,62 @@ describe('"score" method', function() {
       });
     });
   });
+
+  describe('"rm" method', function() {
+    // Empty database before the suite
+    before(function(done) {
+      this.client.flushdb(done);
+    });
+    
+    it('should remove member from the leaderboard #1', function(done) {
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.add('member1', 10, cb); },
+        function(cb) { board.add('member2', 20, cb); },
+        function(cb) { board.rm('member2', cb); }
+      ], function() {
+        board.list(function(err, list) {
+          assert.deepEqual(list, [{'member': 'member1', 'score': 10}]);
+          done();
+        });
+      });
+    });
+
+    it('should remove member from the leaderboard #2', function(done) {
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.add('member1', 10, cb); },
+        function(cb) { board.add('member2', 20, cb); },
+        function(cb) { board.rm('member1', cb); }
+      ], function() {
+        board.rank('member1', function(err, rank) {
+          assert.equal(rank, -1);
+          done();
+        });
+      });
+    });
+
+    it('should remove member from the leaderboard #3', function(done) {
+      var board = this.board;
+      board.add('member1', 10, function() {
+        board.rm('member1', function(err, removed) {
+          assert.strictEqual(removed, true);
+          done();
+        });
+      });
+    });
+
+    it('should remove member from the leaderboard #4', function(done) {
+      var board = this.board;
+      board.add('member1', 10, function() {
+        board.rm('member100500', function(err, removed) {
+          assert.strictEqual(removed, false);
+          done();
+        });
+      });
+    });
+
+  });
 });
