@@ -23,8 +23,11 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
   - `pageSize` - default: `0`
 
-    Page size to be used when paging through the leaderboard
+    Page size to be used when paging through the leaderboard.
 
+  - `reverse` - default: `false`
+
+    If `true` various methods will return results in lowest-to-highest order.
 
 ##Methods
 
