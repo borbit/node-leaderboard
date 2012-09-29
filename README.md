@@ -35,7 +35,15 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
     Ranks a member in the leaderboard.
 
-        board.add('borbit', 100500, function(err) {
+        board.add('borbit', 42, function(err) {
+          // no arguments except err
+        });
+
+  - `incr(member, score, [λ])`
+
+    Increments the score of a member by provided value and ranks it in the leaderboard. Decrements if the provided value is negative.
+
+        board.incr('borbit', 42, function(err) {
           // no arguments except err
         });
 

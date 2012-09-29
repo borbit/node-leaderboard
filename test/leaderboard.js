@@ -110,6 +110,64 @@ describe('Leaderboard', function() {
 
   });
 
+  describe('"incr" method', function() {
+    // Empty database before the suite
+    before(function(done) {
+      this.client.flushdb(done);
+    });
+    
+    it('should add members if they don\'t exist', function(done) {
+      var board = this.board;
+      board.incr('member1', 10, function() {
+      board.incr('member2', 20, function() {
+        board.list(function(err, list) {
+          assert.deepEqual(list, [
+            {'member': 'member2', 'score': 20},
+            {'member': 'member1', 'score': 10}
+          ]);
+          done();
+        });
+      });
+      });
+    });
+
+    it('should increment members\' score if they do exist', function(done) {
+      var board = this.board;
+      board.incr('member1', 100, function() {
+        board.score('member1', function(err, score) {
+          assert.equal(score, 110);
+          done();
+        });
+      });
+    });
+
+    it('should decrement members\' score if score value is negative', function(done) {
+      var board = this.board;
+      board.incr('member1', -20, function() {
+        board.score('member1', function(err, score) {
+          assert.equal(score,  90);
+          done();
+        });
+      });
+    });
+
+    it('should keep correct members order', function(done) {
+      this.board.list(function(err, list) {
+        assert.deepEqual(list, [
+          {'member': 'member1', 'score': 90},
+          {'member': 'member2', 'score': 20}
+        ]);
+        done();
+      });
+    });
+
+    it('shoud take "callback" argument as optional', function(done) {
+      this.board.incr('member100', 100);
+      done();
+    });
+
+  });
+
   describe('"rank" method', function() {
     // Empty database before the suite
     before(function(done) {
