@@ -91,6 +91,11 @@ describe('Leaderboard', function() {
       });
     });
 
+    it('shoud take "callback" argument as optional', function(done) {
+      this.board.add('member100', 100);
+      done();
+    });
+
   });
 
   describe('"rank" method', function() {
@@ -306,6 +311,11 @@ describe('Leaderboard', function() {
           done();
         });
       });
+    });
+
+    it('shoud take "callback" argument as optional', function(done) {
+      this.board.rm('member100');
+      done();
     });
 
   });

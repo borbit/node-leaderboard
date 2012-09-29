@@ -31,7 +31,7 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
 ##Methods
 
-  - `add(member, score, λ)`
+  - `add(member, score, [λ])`
 
     Ranks a member in the leaderboard.
 
@@ -71,7 +71,7 @@ Creates a new leaderboard or attaches to an existing leaderboard.
           // ]
         });
 
-  - `rm(member, λ)`
+  - `rm(member, [λ])`
 
     Removes a member from the leaderboard.
 
