@@ -41,7 +41,7 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
   - `incr(member, score, [λ])`
 
-    Increments the score of a member by provided value and ranks it in the leaderboard. Decrements if the provided value is negative.
+    Increments the score of a member by provided value and ranks it in the leaderboard. Decrements if negative.
 
         board.incr('borbit', 42, function(err) {
           // no arguments except err
