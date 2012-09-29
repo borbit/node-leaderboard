@@ -35,8 +35,8 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
     Ranks a member in the leaderboard.
 
-        board.add('borbit', 100500, function(err, rank) {
-          // rank - current position in the leadeboard
+        board.add('borbit', 100500, function(err) {
+          // no arguments except err
         });
 
   - `rank(member, λ)`
