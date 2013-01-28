@@ -396,7 +396,7 @@ describe('"at" method', function() {
       this.client.flushdb(done);
     });
     
-    it('should return correct member', function(done) {
+    it('should return correct member #1', function(done) {
       var board = this.board;
 
       async.parallel([
@@ -410,6 +410,24 @@ describe('"at" method', function() {
           assert.deepEqual(member, {'member': 'member3', 'score': 30});
           done();
         });
+      });
+    });
+
+    it('should return correct member #2', function(done) {
+      var board = this.board;
+
+      board.at(-2, function(err, member) {
+        assert.deepEqual(member, {'member': 'member2', 'score': 20});
+        done();
+      });
+    });
+
+    it('should return null if member is not found', function(done) {
+      var board = this.board;
+
+      board.at(100, function(err, member) {
+        assert.deepEqual(member, null);
+        done();
       });
     });
   });
@@ -443,7 +461,7 @@ describe('"at" method', function() {
     });
 
     describe('"pageSize"', function() {
-      it('should enforce specified number of entries for a page', function(done) {
+      it('should set specified number of entries for a page', function(done) {
         var board = new LB('general', {pageSize: 3}, {db: DBINDEX});
 
         async.parallel([
@@ -461,7 +479,7 @@ describe('"at" method', function() {
     });
 
     describe('"reverse"', function() {
-      it('should enforce "list" method return results in reverse order', function(done) {
+      it('should make "list" method return results in reverse order', function(done) {
         var board = new LB('general', {reverse: true}, {db: DBINDEX});
         board.list(function(err, list) {
           assert.deepEqual(list, [
@@ -474,10 +492,18 @@ describe('"at" method', function() {
         });
       });
 
-      it('should enforce "rank" method return results in reverse order', function(done) {
+      it('should make "rank" method return results in reverse order', function(done) {
         var board = new LB('general', {reverse: true}, {db: DBINDEX});
         board.rank('member2', function(err, rank) {
           assert.equal(rank, 1);
+          done();
+        });
+      });
+
+      it('should make "at" method return results in reverse order', function(done) {
+        var board = new LB('general', {reverse: true}, {db: DBINDEX});
+        board.at(1, function(err, member) {
+          assert.deepEqual(member, {'member': 'member2', 'score': 20});
           done();
         });
       });

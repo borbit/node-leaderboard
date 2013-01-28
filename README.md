@@ -79,6 +79,19 @@ Creates a new leaderboard or attaches to an existing leaderboard.
           // ]
         });
 
+  - `at(rank, λ)`
+
+    Retrieves a member on the spicified rank.
+
+        board.at(42, function(err, member) {
+          // member - member at the specified rank,
+          // null if a member is not found
+          // {
+          //   member: 'member1',
+          //   score: 30
+          // }
+        });
+
   - `rm(member, [λ])`
 
     Removes a member from the leaderboard.
