@@ -390,6 +390,30 @@ describe('Leaderboard', function() {
 
   });
 
+describe('"at" method', function() {
+    // Empty database before the suite
+    before(function(done) {
+      this.client.flushdb(done);
+    });
+    
+    it('should return correct member', function(done) {
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.add('member1', 10, cb); },
+        function(cb) { board.add('member2', 20, cb); },
+        function(cb) { board.add('member3', 30, cb); },
+        function(cb) { board.add('member4', 40, cb); },
+        function(cb) { board.add('member5', 50, cb); }
+      ], function() {
+        board.at(2, function(err, member) {
+          assert.deepEqual(member, {'member': 'member3', 'score': 30});
+          done();
+        });
+      });
+    });
+  });
+
   describe('"total" method', function() {
     // Empty database before the suite
     before(function(done) {
