@@ -60,7 +60,7 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
     Retrieves the score for a member in the leaderboard.
 
-        board.score('borbit', function(err, rank) {
+        board.score('borbit', function(err, score) {
           // score - current score, -1 if a member doesn't
           // fall within the leaderboard
         });
@@ -87,6 +87,14 @@ Creates a new leaderboard or attaches to an existing leaderboard.
           // removed - false in case the removing memeber 
           // doesn't exist in the leaderboard.
           // true - successful remove
+        });
+
+  - `total([λ])`
+
+    Retrieves the total number of members in the leaderboard.
+
+        board.total(function(err, number) {
+          // captain obvious
         });
 
 ##Tests

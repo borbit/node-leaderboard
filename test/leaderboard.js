@@ -390,6 +390,28 @@ describe('Leaderboard', function() {
 
   });
 
+  describe('"total" method', function() {
+    // Empty database before the suite
+    before(function(done) {
+      this.client.flushdb(done);
+    });
+    
+    it('should return correct number of members', function(done) {
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.add('member1', 10, cb); },
+        function(cb) { board.add('member2', 20, cb); },
+        function(cb) { board.add('member3', 30, cb); }
+      ], function() {
+        board.total(function(err, total) {
+          assert.equal(total, 3);
+          done();
+        });
+      });
+    });
+  });
+
   describe('Options', function() {
     // Empty database before the suite
     before(function(done) {
