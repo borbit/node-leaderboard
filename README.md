@@ -1,7 +1,7 @@
 Leaderboard
 -----------
 
-Leaderboards backed by [Redis](http://redis.io) in Node.js. Inspired by [Agoragames' Leaderboard](https://github.com/agoragames/leaderboard).
+Leaderboards backed by [Redis](http://redis.io) in Node.js. Initially written for the [Minefield](http://mienfield.com) HTML5 game. Inspired by [Agoragames' Leaderboard](https://github.com/agoragames/leaderboard).
 
 [![Build Status](https://secure.travis-ci.org/borbit/node-leaderboard.png)](http://travis-ci.org/borbit/node-leaderboard)
 
