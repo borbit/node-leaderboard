@@ -293,7 +293,7 @@ describe('Leaderboard', function() {
       var board = this.board;
       board.add('member1', 50, function() {
         board.score('member1', function(err, score) {
-          assert.deepEqual(score, 50);
+          assert.equal(score, 50);
           done();
         });
       });
@@ -303,7 +303,7 @@ describe('Leaderboard', function() {
       var board = this.board;
       board.add('member2', 100, function() {
         board.score('member2', function(err, score) {
-          assert.deepEqual(score, 100);
+          assert.equal(score, 100);
           done();
         });
       });
@@ -313,7 +313,17 @@ describe('Leaderboard', function() {
       var board = this.board;
       board.add('member1', 150, function() {
         board.score('member1', function(err, score) {
-          assert.deepEqual(score, 150);
+          assert.equal(score, 150);
+          done();
+        });
+      });
+    });
+
+    it('score should be typeof number', function(done) {
+      var board = this.board;
+      board.add('member1', 150, function() {
+        board.score('member1', function(err, score) {
+          assert.equal(typeof(score), 'number');
           done();
         });
       });
@@ -321,7 +331,7 @@ describe('Leaderboard', function() {
 
     it('should return -1 if member isn\'t in the leaderboard', function(done) {
       this.board.score('sosiska', function(err, score) {
-        assert.deepEqual(score, -1);
+        assert.equal(score, -1);
         done();
       });
     });
@@ -418,6 +428,15 @@ describe('"at" method', function() {
 
       board.at(-2, function(err, member) {
         assert.deepEqual(member, {'member': 'member2', 'score': 20});
+        done();
+      });
+    });
+
+    it('returned score should be typeof number', function(done) {
+      var board = this.board;
+
+      board.at(1, function(err, member) {
+        assert.equal(typeof(member.score), 'number');
         done();
       });
     });
