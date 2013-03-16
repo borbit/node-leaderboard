@@ -108,6 +108,30 @@ describe('Leaderboard', function() {
       done();
     });
 
+    it('addIn method should do the same but with another leaderboard', function(done) {
+      var name = '__add_method_test__';
+      var client = this.client;
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.addIn(name, 'member1', 30, cb); },
+        function(cb) { board.addIn(name, 'member2', 20, cb); },
+        function(cb) { board.addIn(name, 'member3', 10, cb); }
+      ], function() {
+
+        var board = new LB(name, null, client);
+        
+        board.list(function(err, list) {
+          assert.deepEqual(list, [
+            {'member': 'member1', 'score': 30},
+            {'member': 'member2', 'score': 20},
+            {'member': 'member3', 'score': 10}
+          ]);
+          done();
+        });
+      });
+    });
+
   });
 
   describe('"incr" method', function() {
@@ -166,6 +190,26 @@ describe('Leaderboard', function() {
       done();
     });
 
+    it('incrIn method should do the same but with another leaderboard', function(done) {
+      var name = '__incr_method_test__';
+      var client = this.client;
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.incrIn(name, 'member1', 30, cb); },
+        function(cb) { board.incrIn(name, 'member1', 20, cb); }
+      ], function() {
+        var board = new LB(name, null, client);
+        
+        board.list(function(err, list) {
+          assert.deepEqual(list, [
+            {'member': 'member1', 'score': 50}
+          ]);
+          done();
+        });
+      });
+    });
+
   });
 
   describe('"rank" method', function() {
@@ -208,6 +252,23 @@ describe('Leaderboard', function() {
       this.board.rank('piska', function(err, rank) {
         assert.equal(rank, -1);
         done();
+      });
+    });
+
+    it('rankIn method should do the same but with another leaderboard', function(done) {
+      var name = '__rank_method_test__';
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.addIn(name, 'member1', 30, cb); },
+        function(cb) { board.addIn(name, 'member2', 40, cb); },
+        function(cb) { board.addIn(name, 'member3', 50, cb); }
+      ], function() {
+
+        board.rankIn(name, 'member3', function(err, rank) {
+          assert.equal(rank, 0);
+          done();
+        });
       });
     });
 
@@ -281,6 +342,27 @@ describe('Leaderboard', function() {
       });
     });
 
+    it('listIn method should do the same but with another leaderboard', function(done) {
+      var name = '__list_method_test__';
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.addIn(name, 'member1', 30, cb); },
+        function(cb) { board.addIn(name, 'member2', 40, cb); },
+        function(cb) { board.addIn(name, 'member3', 50, cb); }
+      ], function() {
+
+        board.listIn(name, function(err, list) {
+          assert.deepEqual(list, [
+            {'member': 'member3', 'score': 50},
+            {'member': 'member2', 'score': 40},
+            {'member': 'member1', 'score': 30}
+          ]);
+          done();
+        });
+      });
+    });
+
   });
 
   describe('"score" method', function() {
@@ -333,6 +415,23 @@ describe('Leaderboard', function() {
       this.board.score('sosiska', function(err, score) {
         assert.equal(score, -1);
         done();
+      });
+    });
+
+    it('scoreIn method should do the same but with another leaderboard', function(done) {
+      var name = '__score_method_test__';
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.addIn(name, 'member1', 30, cb); },
+        function(cb) { board.addIn(name, 'member2', 40, cb); },
+        function(cb) { board.addIn(name, 'member3', 50, cb); }
+      ], function() {
+
+        board.scoreIn(name, 'member2', function(err, score) {
+          assert.equal(score, 40);
+          done();
+        });
       });
     });
   });
@@ -398,6 +497,28 @@ describe('Leaderboard', function() {
       done();
     });
 
+    it('rmIn method should do the same but with another leaderboard', function(done) {
+      var name = '__rm_method_test__';
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.addIn(name, 'member1', 30, cb); },
+        function(cb) { board.addIn(name, 'member2', 40, cb); },
+        function(cb) { board.addIn(name, 'member3', 50, cb); }
+      ], function() {
+
+        board.rmIn(name, 'member2', function(err, score) {
+          board.listIn(name, function(err, list) {
+            assert.deepEqual(list, [
+              {'member': 'member3', 'score': 50},
+              {'member': 'member1', 'score': 30}
+            ]);
+            done();
+          });
+        });
+      });
+    });
+
   });
 
 describe('"at" method', function() {
@@ -449,6 +570,23 @@ describe('"at" method', function() {
         done();
       });
     });
+
+    it('atIn method should do the same but with another leaderboard', function(done) {
+      var name = '__at_method_test__';
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.addIn(name, 'member1', 30, cb); },
+        function(cb) { board.addIn(name, 'member2', 40, cb); },
+        function(cb) { board.addIn(name, 'member3', 50, cb); }
+      ], function() {
+
+        board.atIn(name, 1, function(err, member) {
+          assert.deepEqual(member, {'member': 'member2', 'score': 40});
+          done();
+        });
+      });
+    });
   });
 
   describe('"total" method', function() {
@@ -467,6 +605,22 @@ describe('"at" method', function() {
       ], function() {
         board.total(function(err, total) {
           assert.equal(total, 3);
+          done();
+        });
+      });
+    });
+
+    it('totalIn method should do the same but with another leaderboard', function(done) {
+      var name = '__total_method_test__';
+      var board = this.board;
+
+      async.parallel([
+        function(cb) { board.addIn(name, 'member1', 30, cb); },
+        function(cb) { board.addIn(name, 'member2', 40, cb); },
+      ], function() {
+
+        board.totalIn(name, function(err, total) {
+          assert.equal(total, 2);
           done();
         });
       });
