@@ -81,7 +81,7 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
   - `at(rank, λ)`
 
-    Retrieves a member on the spicified rank.
+    Retrieves a member on the specified rank.
 
         board.at(42, function(err, member) {
           // member - member at the specified rank,
@@ -97,7 +97,7 @@ Creates a new leaderboard or attaches to an existing leaderboard.
     Removes a member from the leaderboard.
 
         board.rm('kot', function(err, removed) {
-          // removed - false in case the removing memeber 
+          // removed - false in case the removing member
           // doesn't exist in the leaderboard.
           // true - successful remove
         });
@@ -116,6 +116,6 @@ Leaderboard is covered by [Mocha](http://visionmedia.github.com/mocha/). To run 
 
     $ npm test
 
-## License 
+## License
 
 [MIT](http://en.wikipedia.org/wiki/MIT_License#License_terms). Copyright (c) 2012 Serge Borbit &lt;serge.borbit@gmail.com&gt;
