@@ -317,28 +317,50 @@ describe('Leaderboard', function() {
       });
     });
 
-    it('should return correct number of entries for the page 0', function(done) {
-      var board = new LB('general', {pageSize: 5}, {db: DBINDEX});
+    describe('Using the pageSize member', function() {
+      it('should return correct number of entries for the page 0', function(done) {
+        var board = new LB('general', {pageSize: 5}, {db: DBINDEX});
 
-      async.parallel([
-        function(cb) { board.add('member4', 60, cb); },
-        function(cb) { board.add('member5', 70, cb); },
-        function(cb) { board.add('member6', 80, cb); },
-        function(cb) { board.add('member7', 90, cb); }
-      ], function() {
-        board.list(function(err, list) {
-          assert.equal(list.length, 5);
+        async.parallel([
+          function(cb) { board.add('member4', 60, cb); },
+          function(cb) { board.add('member5', 70, cb); },
+          function(cb) { board.add('member6', 80, cb); },
+          function(cb) { board.add('member7', 90, cb); }
+        ], function() {
+          board.list(function(err, list) {
+            assert.equal(list.length, 5);
+            done();
+          });
+        });
+      });
+
+      it('should return correct number of entries for the page 1', function(done) {
+        var board = new LB('general', {pageSize: 5}, {db: DBINDEX});
+        
+        board.list(1, function(err, list) {
+          assert.equal(list.length, 2);
           done();
         });
       });
     });
 
-    it('should return correct number of entries for the page 1', function(done) {
-      var board = new LB('general', {pageSize: 5}, {db: DBINDEX});
-      
-      board.list(1, function(err, list) {
-        assert.equal(list.length, 2);
-        done();
+    describe('Overriding the pageSize member', function() {
+      it('should return correct number of entries for the page 0', function(done) {
+        var board = new LB('general', {pageSize: 2}, {db: DBINDEX});
+
+        board.list({page: 0, pageSize: 5}, function(err, list) {
+          assert.equal(list.length, 5);
+          done();
+        });
+      });
+
+      it('should return correct number of entries for the page 1', function(done) {
+        var board = new LB('general', {pageSize: 1}, {db: DBINDEX});
+        
+        board.list({page: 1, pageSize: 5}, function(err, list) {
+          assert.equal(list.length, 2);
+          done();
+        });
       });
     });
 
