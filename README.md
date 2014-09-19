@@ -65,9 +65,9 @@ Creates a new leaderboard or attaches to an existing leaderboard.
           // fall within the leaderboard
         });
 
-  - `list([page], λ)`
+  - `list([page|options], λ)`
 
-    Retrieves a page of leaders from the leaderboard.
+    Retrieves a page of leaders from the leaderboard. Optionally, taking a page number or an object of the form {page: {Number}, pageSize: {Number}}
 
         board.list(function(err, list) {
           // list - list of leaders are ordered from
