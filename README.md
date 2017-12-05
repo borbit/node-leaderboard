@@ -112,7 +112,7 @@ Creates a new leaderboard or attaches to an existing leaderboard.
 
 ##Tests
 
-Leaderboard is covered by [Mocha](http://visionmedia.github.com/mocha/). To run tests:
+Leaderboard is covered by [Mocha](http://mochajs.org/). To run tests:
 
     $ npm test
 
